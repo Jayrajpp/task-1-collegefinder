@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College Finder</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    /* ================= GLOBAL ================= */
+    body {
+      padding-top: 70px;
+      background: linear-gradient(to bottom, #f8f9fa, #e9eef5);
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      animation: fadeIn 1s ease-in;
+    }
+
+    section {
+      scroll-margin-top: 80px;
+    }
+
+    /* ================= ANIMATIONS ================= */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ================= NAVBAR ================= */
+    .navbar {
+      animation: slideDown 0.8s ease;
+    }
+
+    .nav-link {
+      position: relative;
+      font-weight: 500;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0%;
+      height: 2px;
+      background: #ffc107;
+      transition: 0.3s;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* ================= CAROUSEL ================= */
+    .carousel-item img {
+      height: 75vh;
+      object-fit: cover;
+      filter: brightness(70%);
+    }
+
+    .carousel-caption {
+      bottom: 30%;
+      animation: slideUp 1s ease;
+    }
+
+    .carousel-caption h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      text-shadow: 0 4px 10px rgba(0,0,0,0.7);
+    }
+
+    /* ================= BUTTON ================= */
+    .btn-warning {
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-warning:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    /* ================= CARDS ================= */
+    .card {
+      border: none;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.4s, box-shadow 0.4s;
+      animation: slideUp 0.8s ease;
+    }
+
+    .card img {
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 18px 35px rgba(0,0,0,0.2);
+    }
+
+    /* ================= COURSES ================= */
+    #courses .card {
+      font-weight: 600;
+      background: linear-gradient(135deg, #ffffff, #eef2ff);
+      cursor: pointer;
+    }
+
+    #courses .card:hover {
+      background: linear-gradient(135deg, #ffc107, #ffda6a);
+      transform: scale(1.05);
+    }
+
+    /* ================= CONTACT ================= */
+    #contact input,
+    #contact textarea {
+      border-radius: 12px;
+      transition: box-shadow 0.3s;
+    }
+
+    #contact input:focus,
+    #contact textarea:focus {
+      box-shadow: 0 0 10px rgba(255,193,7,0.6);
+    }
+
+    /* ================= FOOTER ================= */
+    footer {
+      background: linear-gradient(135deg, #212529, #000);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+  <div class="container">
+
+    <a class="navbar-brand d-flex align-items-center fw-bold" href="#home">
+      <img src="images/logo.jpeg" width="40" height="40" class="me-2 rounded-circle">
+      CollegeFinder
+    </a>
+
+    <button class="navbar-toggler d-lg-none" type="button"
+            data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse d-none d-lg-flex">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#colleges">Colleges</a></li>
+        <li class="nav-item"><a class="nav-link" href="#courses">Courses</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        <li class="nav-item ms-3">
+          <button class="btn btn-warning"
+                  data-bs-toggle="offcanvas"
+                  data-bs-target="#offcanvasMenu">
+            Find College
+          </button>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+<!-- ================= OFFCANVAS ================= -->
+<div class="offcanvas offcanvas-end text-bg-dark" id="offcanvasMenu">
+  <div class="offcanvas-header">
+    <h5>Find College</h5>
+    <button class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <form>
+      <input class="form-control mb-3" placeholder="College Name">
+      <select class="form-select mb-3">
+        <option>Engineering</option>
+        <option>Medical</option>
+        <option>Management</option>
+        <option>Arts</option>
+      </select>
+      <input class="form-control mb-3" placeholder="City">
+      <button class="btn btn-warning w-100">Search</button>
+    </form>
+  </div>
+</div>
+
+<!-- ================= HOME / CAROUSEL ================= -->
+<section id="home">
+<div id="collegeSlider" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="images/slide1.jpg" class="d-block w-100">
+      <div class="carousel-caption">
+        <h1>Top Engineering Colleges</h1>
+        <p>IIT • NIT • Universities</p>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <img src="images/aiimsd.jpg" class="d-block w-100">
+      <div class="carousel-caption">
+        <h1>Best Medical Colleges</h1>
+        <p>AIIMS • MBBS • Medical Institutes</p>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <img src="images/slide2.jpg" class="d-block w-100">
+      <div class="carousel-caption">
+        <h1>Top Management Institutes</h1>
+        <p>IIM • MBA • Business Schools</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="carousel-control-prev" type="button"
+          data-bs-target="#collegeSlider" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+
+  <button class="carousel-control-next" type="button"
+          data-bs-target="#collegeSlider" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+</section>
+
+<!-- ================= COLLEGES ================= -->
+<div class="container my-5" id="colleges">
+  <h2 class="text-center mb-4">Top Colleges</h2>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card">
+        <img src="images/iitb.jpg">
+        <div class="card-body">
+          <h5>IIT Bombay</h5>
+          <p>Mumbai | Engineering</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <img src="images/aiimsd.jpg">
+        <div class="card-body">
+          <h5>AIIMS Delhi</h5>
+          <p>Delhi | Medical</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <img src="images/iima.jpg">
+        <div class="card-body">
+          <h5>IIM Ahmedabad</h5>
+          <p>Management</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= COURSES ================= -->
+<section id="courses" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-4">Popular Courses</h2>
+    <div class="row g-4 text-center">
+      <div class="col-md-3"><div class="card p-3">Engineering</div></div>
+      <div class="col-md-3"><div class="card p-3">Medical</div></div>
+      <div class="col-md-3"><div class="card p-3">Management</div></div>
+      <div class="col-md-3"><div class="card p-3">Arts</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Contact Us</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <form>
+          <input class="form-control mb-3" placeholder="Your Name">
+          <input class="form-control mb-3" placeholder="Email">
+          <textarea class="form-control mb-3" rows="4" placeholder="Message"></textarea>
+          <button class="btn btn-primary">Send Message</button>
+        </form>
+      </div>
+      <div class="col-md-6">
+        <h5>CollegeFinder</h5>
+        <p>Email: support@collegefinder.com</p>
+        <p>Phone: +91 98765 43210</p>
+        <p>India</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="text-white py-3">
+  <div class="container d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
+      <img src="images/logo.jpeg" width="30" height="30" class="me-2 rounded-circle">
+      © 2025 CollegeFinder
+    </div>
+    <span>Designed by Jay</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
